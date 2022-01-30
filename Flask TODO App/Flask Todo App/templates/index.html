@@ -30,29 +30,12 @@
                         <a class="nav-link active" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
+                        <a class="nav-link" href="#">About</a>
                     </li>
                 </ul>
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <button class="btn btn-dark" type="submit">Search</button>
                 </form>
             </div>
         </div>
@@ -72,13 +55,20 @@
               <label for="desc" class="form-label">Discription</label>
               <input type="text" class="form-control" id="discription" name="discription">
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-dark">Submit</button>
           </form>
     </div>
 <!-- Form end  -->
     <!-- Table content to show todos -->
 <div class="container my-5">
     <h2>My Todos</h2>
+    {% if allTodos | length == 0  %}
+
+    <div class="alert alert-dark" role="alert">
+        No Record Added Today
+      </div>
+
+    {% else %}
     <table class="table">
         <thead>
           <tr>
@@ -87,6 +77,7 @@
             <th scope="col">Discription</th>
             <th scope="col">Status</th>
             <th scope="col">Time</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -99,11 +90,16 @@
             <td>{{ todo.desc }}</td>
             <td>{{ todo.complete }}</td>
             <td>{{ todo.date_created }}</td>
+            <td>
+                <a href="/update/{{todo.sno}}"><button type="button" class="btn btn-dark">Update</button></a>
+                <a href="/delete/{{todo.sno}}"><button type="button" class="btn btn-dark">Delete</button></a>
+            </td>
           </tr>
           {% endfor %}
           
         </tbody>
       </table>
+      {% endif %}
     </div>
     <!-- Table End  -->
     <!-- Optional JavaScript; choose one of the two! -->

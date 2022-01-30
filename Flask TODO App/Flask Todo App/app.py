@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, redirect, render_template, request, url_for
 #importing sqlalchemy for database configrations
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -36,10 +36,13 @@ def hello_world():
     #getting value from the foem and creating a dynamic todo in the table.
     if request.method == "POST":
         add_todo = request.form['add_todo']
-        dicription = request.form['discription']
-        todo = Todo(title=add_todo, desc=dicription, complete=False)
+        disription = request.form['discription']
+        todo = Todo(title=add_todo, desc=disription, complete=False)
         db.session.add(todo)
         db.session.commit()
+
+        #this is to clear the form after submitting. Because if this is not written then each and every time form loads, the privios data will be submitted.
+        return redirect("/")
 
     # Adding Todo in database. it will manually add all todo in database on load the page.
     # todo = Todo(title="1st todo", desc="wake up early", complete=False)
@@ -63,8 +66,17 @@ def hello_world():
     # return "<p>Hello, World!</p>"
 
 # This is to understand app.route "Note /products in app.route"  // This is to create multipal end points.
-@app.route("/show")
-def todos(): 
+@app.route("/delete/<int:sno>")
+def delete(sno): 
+    # display all todos in database on show endpoint
+    todo = Todo.query.get(sno)
+    db.session.delete(todo)
+    db.session.commit()
+    return redirect("/")
+
+
+@app.route("/update/<int:sno>")
+def update(): 
     # display all todos in database on show endpoint
     allTodos = Todo.query.all()
     print(allTodos)
