@@ -18,7 +18,7 @@
     <!-- Navbar  -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">My Todo</a>
+            <a class="navbar-brand" href="/">My Todo</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -63,14 +63,14 @@
 
 <!-- Form  -->
     <div class="container my-3">
-        <form>
+        <form method="post" action='/'>
             <div class="mb-3">
-              <label for="add_todo" class="form-label">Add Todo</label>
-              <input type="text" class="form-control" id="add-todo">
+              <label for="title" class="form-label">Add Todo</label>
+              <input type="text" class="form-control" id="add-todo" name="add_todo">
             </div>
             <div class="mb-3">
-              <label for="discription" class="form-label">Discription</label>
-              <input type="text" class="form-control" id="discription">
+              <label for="desc" class="form-label">Discription</label>
+              <input type="text" class="form-control" id="discription" name="discription">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
@@ -83,29 +83,25 @@
         <thead>
           <tr>
             <th scope="col">SNo</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">Title</th>
+            <th scope="col">Discription</th>
+            <th scope="col">Status</th>
+            <th scope="col">Time</th>
           </tr>
         </thead>
         <tbody>
+          {% for todo in allTodos %}
           <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <!-- <th scope="row">{{todo.sno}}</th> -->
+            <!-- we can use loop.index to counter the misnumbers like if we have deleted the id 9 then it will show like 7,8,10. to overcome it: -->
+            <th scope="row">{{loop.index}}</th>
+            <td>{{todo.title}}</td>
+            <td>{{ todo.desc }}</td>
+            <td>{{ todo.complete }}</td>
+            <td>{{ todo.date_created }}</td>
           </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
+          {% endfor %}
+          
         </tbody>
       </table>
     </div>
