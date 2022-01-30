@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block container %} 
+<!-- Here container is Bootstrap Classes which we are using -->
+<!-- If we want to make it use whole page width then we can make it like "container-fluid" -->
+<!-- Form  -->
+<div class="container my-3">
+    <form method="post" action='/update/{{todo.sno}}'>
+        <div class="mb-3">
+            <label for="title" class="form-label">Update Todo</label>
+            <input type="text" class="form-control" id="add-todo" name="add_todo" value="{{todo.title}}">
+        </div>
+        <div class="mb-3">
+            <label for="desc" class="form-label">Discription</label>
+            <input type="text" class="form-control" id="discription" name="discription" value="{{todo.desc}}">
+        </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1" value="{{todo.complete}}" name="Done">
+            <label class="form-check-label" for="exampleCheck1">Work Done</label>
+        </div>
+        <button type="submit" class="btn btn-dark">Update</button>
+    </form>
+</div>
+<!-- Form end  -->
+<!-- Table content to show todos -->
+<div class="container my-5">
+    <h2>Update Todo</h2>
+</div>
+<!-- Table End  -->
+{% endblock container %}

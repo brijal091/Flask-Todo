@@ -1,3 +1,4 @@
+from msilib.schema import CheckBox
 from flask import Flask, redirect, render_template, request, url_for
 #importing sqlalchemy for database configrations
 from flask_sqlalchemy import SQLAlchemy
@@ -68,19 +69,27 @@ def hello_world():
 # This is to understand app.route "Note /products in app.route"  // This is to create multipal end points.
 @app.route("/delete/<int:sno>")
 def delete(sno): 
-    # display all todos in database on show endpoint
+    # Deleting Todos
     todo = Todo.query.get(sno)
     db.session.delete(todo)
     db.session.commit()
     return redirect("/")
 
 
-@app.route("/update/<int:sno>")
-def update(): 
-    # display all todos in database on show endpoint
-    allTodos = Todo.query.all()
-    print(allTodos)
-    return "This is todos page"
+@app.route("/update/<int:sno>", methods=['GET', 'POST'])
+def update(sno): 
+    # Updating Todos
+    todo = Todo.query.get(sno)
+    if request.method == "POST":
+        add_todo = request.form['add_todo']
+        discription = request.form['discription']
+        todo = Todo.query.get(sno)
+        todo.title = add_todo
+        todo.desc = discription
+        db.session.add(todo)
+        db.session.commit()
+        return redirect('/')
+    return render_template('update.html', todo = todo)
 
 
 # This is to run our app & note that do not use it torun your app in production.
