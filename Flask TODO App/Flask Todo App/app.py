@@ -1,4 +1,3 @@
-from msilib.schema import CheckBox
 from flask import Flask, redirect, render_template, request, url_for
 #importing sqlalchemy for database configrations
 from flask_sqlalchemy import SQLAlchemy
